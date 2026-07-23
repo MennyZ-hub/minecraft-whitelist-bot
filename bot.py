@@ -8,8 +8,8 @@ ADMIN_ID = int(os.getenv('ADMIN_ID'))
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        'Бот белого списка Minecraft работает!\\n'
-        'Игроки могут подать заявку командой:\\n'
+        'Бот белого списка Minecraft работает!\n'
+        'Игроки могут подать заявку командой:\n'
         '/join Ник'
     )
 
@@ -36,9 +36,9 @@ async def join(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
 
     text = (
-        'Новая заявка на сервер\\n\\n'
-        f'Ник: {nickname}\\n'
-        f'Telegram: @{applicant.username or "без username"}\\n'
+        'Новая заявка на сервер\n\n'
+        f'Ник: {nickname}\n'
+        f'Telegram: @{applicant.username or "без username"}\n'
         f'ID: {applicant.id}'
     )
 
@@ -71,7 +71,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         await query.edit_message_text(
-            f'Заявка одобрена\\nНик: {nickname}'
+            f'Заявка одобрена\nНик: {nickname}'
         )
 
     else:
@@ -81,7 +81,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         await query.edit_message_text(
-            f'Заявка отклонена\\nНик: {nickname}'
+            f'Заявка отклонена\nНик: {nickname}'
         )
 
 
