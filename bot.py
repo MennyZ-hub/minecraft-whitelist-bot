@@ -25,7 +25,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
 
     await update.message.reply_text(
-        "🎮 Добро пожаловать на сервер Menny SMP!\n\nДля получения доступа к серверу нажмите кнопку ниже.",
+        "🎮 Добро пожаловать на сервер Menny!\n\nДля получения доступа к серверу нажмите кнопку ниже.",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
@@ -59,7 +59,10 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"✅ Ваша заявка одобрена!\n"
                     f"Вы добавлены в whitelist под ником: {nickname}\n\n"
                     f"Теперь можете зайти на сервер:\n"
-                    f"menny.skuf.club"
+                    f"menny.skuf.club"\n"
+                    f"Резервный IP: d41.joinserver.xyz:25696 (Порт для ПК)\n"
+                    f"Порт для телефона: 25715"\n"
+                    f"Telegram с чатом: https://t.me/+_1Xw0btf8zNhYTIy \n"
                 )
             )
 
