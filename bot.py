@@ -61,7 +61,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"Теперь можете зайти на сервер:\n"
                     f"menny.skuf.club\n"
                     f"Резервный IP: d41.joinserver.xyz:25696 (Порт для ПК)\n"
-                    f"Порт для телефона: 25715"\n"
+                    f"Порт для телефона: 25715\n"
                     f"Telegram с чатом: https://t.me/+_1Xw0btf8zNhYTIy \n"
                 )
             )
