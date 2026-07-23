@@ -1,9 +1,14 @@
 import os
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+from mcrcon import MCRcon
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 ADMIN_ID = int(os.getenv('ADMIN_ID'))
+
+RCON_HOST = os.getenv('RCON_HOST')
+RCON_PORT = int(os.getenv('RCON_PORT'))
+RCON_PASSWORD = os.getenv('RCON_PASSWORD')
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -53,6 +58,12 @@ async def join(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+def add_to_whitelist(nickname: str):
+    with MCRcon(RCON_HOST, RCON_PASSWORD, port=RCON_PORT) as mcr:
+        mcr.command(f'whitelist add {nickname}')
+        mcr.command('whitelist reload')
+
+
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -65,14 +76,27 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if action == 'approve':
-        await context.bot.send_message(
-            chat_id=applicant_id,
-            text=f'Ваша заявка одобрена! Ник: {nickname}'
-        )
+        try:
+            add_to_whitelist(nickname)
 
-        await query.edit_message_text(
-            f'Заявка одобрена\nНик: {nickname}'
-        )
+            await context.bot.send_message(
+                chat_id=applicant_id,
+                text=(
+                    f'Ваша заявка одобрена!\n'
+                    f'Вы добавлены в whitelist под ником: {nickname}'
+                )
+            )
+
+            await query.edit_message_text(
+                f'Заявка одобрена\n'
+                f'Ник: {nickname}\n'
+                f'Игрок автоматически добавлен в whitelist.'
+            )
+
+        except Exception as e:
+            await query.edit_message_text(
+                f'Ошибка при добавлении в whitelist:\n{e}'
+            )
 
     else:
         await context.bot.send_message(
@@ -81,7 +105,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         await query.edit_message_text(
-            f'Заявка отклонена\nНик: {nickname}'
+            f'Заявка отклонена\n'
+            f'Ник: {nickname}'
         )
 
 
